@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOEIC Vocabulary Quiz</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+
+    <main class="app">
+      <header class="hero">
+        <p class="eyebrow">TOEIC VOCAB QUIZ</p>
+        <h1>TOEIC 単語クイズ</h1>
+        <p class="description">
+          収録語彙を、英→日・日→英の4択で反復学習。
+          正解実績はブラウザに保存されます。
+        </p>
+      </header>
+
+      <section class="panel controls" aria-label="クイズ設定">
+        <div class="control-groups">
+          <div class="control-group">
+            <p class="control-label">出題方向</p>
+            <div class="mode-group" role="radiogroup" aria-label="出題モード">
+              <label class="mode-chip">
+                <input type="radio" name="mode" value="mixed" checked />
+                <span>ミックス</span>
+              </label>
+              <label class="mode-chip">
+                <input type="radio" name="mode" value="enToJa" />
+                <span>英 → 日</span>
+              </label>
+              <label class="mode-chip">
+                <input type="radio" name="mode" value="jaToEn" />
+                <span>日 → 英</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <p class="control-label">出題形式</p>
+            <div class="mode-group" role="radiogroup" aria-label="出題形式">
+              <label class="mode-chip">
+                <input type="radio" name="quiz-style" value="text" checked />
+                <span>通常</span>
+              </label>
+              <label class="mode-chip">
+                <input type="radio" name="quiz-style" value="audio" />
+                <span>音声問題</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-buttons">
+          <button id="skip-btn" class="btn btn-ghost" type="button">スキップ</button>
+          <button id="reset-btn" class="btn btn-danger" type="button">実績リセット</button>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="統計">
+        <article class="panel stat-card">
+          <p class="stat-label">学習済み語彙</p>
+          <p class="stat-value" id="stat-practiced">0 / -</p>
+        </article>
+        <article class="panel stat-card">
+          <p class="stat-label">累計正答率</p>
+          <p class="stat-value" id="stat-total-accuracy">0%</p>
+        </article>
+        <article class="panel stat-card">
+          <p class="stat-label">今回セッション</p>
+          <p class="stat-value" id="stat-session">0 / 0</p>
+        </article>
+        <article class="panel stat-card">
+          <p class="stat-label">安定正解語彙</p>
+          <p class="stat-value" id="stat-mastered">0</p>
+        </article>
+      </section>
+
+      <section class="panel quiz" aria-live="polite">
+        <div class="quiz-meta">
+          <span id="direction-badge" class="badge">英 → 日</span>
+          <span id="kind-badge" class="badge kind">単語</span>
+        </div>
+
+        <p class="question-label">問題</p>
+        <h2 id="question-text" class="question-text">Loading...</h2>
+        <div class="audio-row">
+          <button id="speak-btn" class="btn btn-ghost audio-btn" type="button">英語を再生</button>
+          <label class="auto-speak-toggle">
+            <input id="auto-speak" type="checkbox" />
+            <span>出題時に自動再生</span>
+          </label>
+        </div>
+        <div class="voice-settings" aria-label="読み上げ設定">
+          <label class="voice-setting voice-select-wrap">
+            <span>音声</span>
+            <select id="voice-select" class="voice-select"></select>
+          </label>
+          <label class="voice-setting voice-rate-wrap">
+            <span>速度</span>
+            <input id="speech-rate" type="range" min="0.8" max="1.1" step="0.05" />
+            <output id="speech-rate-value">0.90x</output>
+          </label>
+        </div>
+
+        <div id="choices" class="choices"></div>
+
+        <div id="feedback" class="feedback" hidden></div>
+
+        <button id="next-btn" class="btn btn-primary" type="button" hidden>
+          次の問題
+        </button>
+      </section>
+
+      <section class="panel weak-terms" aria-label="苦手語彙">
+        <div class="weak-header">
+          <h3>苦手TOP10</h3>
+          <p>2回以上回答した語彙から正答率の低い順</p>
+        </div>
+        <div class="weak-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>語彙</th>
+                <th>種別</th>
+                <th>正答率</th>
+                <th>回答数</th>
+              </tr>
+            </thead>
+            <tbody id="weak-list">
+              <tr>
+                <td colspan="4" class="placeholder">まだデータがありません</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="vocabulary.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
